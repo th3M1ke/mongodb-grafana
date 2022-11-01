@@ -63,6 +63,8 @@ db.sensor_value.aggregate ( [
 
 `$from` and `$to` are expanded by the plugin as BSON dates based on the range settings on the UI.
 
+## Template Variables
+
 `$sensor` and `$host` are template variables that are filled in by Grafana based on the drop down. The sample template queries are shown below. They expect documents to be returned with a single `_id` field.
 
 
@@ -125,7 +127,13 @@ Note
 * Homebrew grafana versions in /usr/local/Cellar
 
 
+docker rm $(docker ps -aq) && docker run -p 3000:3000 -v $(pwd):/var/lib/grafana/plugins/mongodb-grafana --env GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-mongodb-datasource grafana/grafana
 
+docker run -p 27017:27017 mongo
+
+
+apk add --update nodejs npm
+docker exec -it -u root beautiful_hawking /bin/bash
 
 
 
