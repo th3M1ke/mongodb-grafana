@@ -16,7 +16,7 @@ app.all('/', function(req, res, next)
   logRequest(req.body, "/")
   setCORSHeaders(res);
 
-  MongoClient.connect(req.body.db.url, function(err, client)
+  MongoClient.connect(process.env.MONGO_DB_URL, function(err, client)
   {
     if ( err != null )
     {
@@ -288,7 +288,7 @@ function parseQuery(query, substitutions)
 
 function runAggregateQuery( requestId, queryId, body, queryArgs, res, next )
 {
-  MongoClient.connect(body.db.url, function(err, client) 
+  MongoClient.connect(process.env.MONGO_DB_URL, function(err, client) 
   {
     if ( err != null )
     {
@@ -296,7 +296,7 @@ function runAggregateQuery( requestId, queryId, body, queryArgs, res, next )
     }
     else
     {
-      const db = client.db(body.db.db);
+      const db = client.db(process.env.MONGO_DB_NAME);
   
       // Get the documents collection
       const collection = db.collection(queryArgs.collection);
@@ -422,10 +422,7 @@ function getTimeseriesResults(docs)
 function doTemplateQuery(requestId, queryArgs, db, res, next)
 {
  if ( queryArgs.err == null)
-  {
-    // Database Name
-    const dbName = db.db
-    
+  { 
     // Use connect method to connect to the server
     MongoClient.connect(db.url, function(err, client) 
     {
@@ -440,7 +437,7 @@ function doTemplateQuery(requestId, queryArgs, db, res, next)
         {
           delete requestsPending[requestId]
         }
-        const db = client.db(dbName);
+        const db = client.db(process.env.MONGO_DB_NAME);
         // Get the documents collection
         const collection = db.collection(queryArgs.collection);
           

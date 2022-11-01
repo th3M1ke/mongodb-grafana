@@ -127,7 +127,13 @@ Note
 * Homebrew grafana versions in /usr/local/Cellar
 
 
+docker rm $(docker ps -aq) && docker run -p 3000:3000 -v $(pwd):/var/lib/grafana/plugins/mongodb-grafana --env GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-mongodb-datasource grafana/grafana
 
+docker run -p 27017:27017 mongo
+
+
+apk add --update nodejs npm
+docker exec -it -u root beautiful_hawking /bin/bash
 
 
 
